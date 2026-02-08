@@ -16,14 +16,9 @@ export function Header() {
   return (
     <header className="sticky top-0 z-50 border-b border-border bg-background/80 backdrop-blur-md">
       <div className="mx-auto flex h-16 max-w-6xl items-center justify-between px-4">
-        {/* Logo */}
-        <Link href="/" className="flex items-center gap-2">
-          <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-primary">
-            <span className="font-mono text-sm font-bold text-white">SM</span>
-          </div>
-          <span className="hidden text-lg font-semibold text-text-primary sm:block">
-            Stable Markets
-          </span>
+        {/* Logo — text only */}
+        <Link href="/" className="text-lg font-semibold text-text-primary">
+          Stable Markets
         </Link>
 
         {/* Nav pills — hidden on mobile, shown on md+ */}
