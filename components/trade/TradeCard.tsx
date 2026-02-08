@@ -51,42 +51,49 @@ export function TradeCard() {
   // Convert input to bigint for quoting
   const isMint = tradeTab === "mint";
 
-  // For mint: user enters USDX amount they want -> we quote ETH cost
-  // For redeem: user enters USDX amount to burn -> we quote ETH return
+  // For mint: user enters ETH amount (top) -> we estimate USDX output (bottom)
+  // For redeem: user enters USDX amount (top) -> we quote ETH return (bottom)
   const inputAmount = useMemo(
     () => parseTokenInput(inputValue),
     [inputValue]
   );
 
-  // Mint quote (USDX output -> ETH cost)
-  const mintQuote = useMintQuote(isMint ? inputAmount : 0n);
+  // For mint: estimate USDX output from ETH input using currentPrice
+  // We can't call calculateMintCost in reverse, so we approximate:
+  // usdxOut ≈ ethIn * currentPrice
+  const estimatedUsdxOut = useMemo(() => {
+    if (!isMint || inputAmount === 0n || currentPrice === 0n) return 0n;
+    return (inputAmount * currentPrice) / (10n ** 18n);
+  }, [isMint, inputAmount, currentPrice]);
+
+  // Mint quote — use estimated USDX to get exact ETH cost for slippage calc
+  const mintQuote = useMintQuote(isMint ? estimatedUsdxOut : 0n);
   // Redeem quote (USDX input -> ETH output)
   const redeemQuote = useRedeemQuote(!isMint ? inputAmount : 0n);
 
-  // Calculate the other side of the trade
+  // Calculate the output side display
   useEffect(() => {
+    if (inputAmount === 0n) {
+      setOutputValue("");
+      return;
+    }
+
     if (isMint) {
-      if (inputAmount === 0n) {
-        setOutputValue("");
-        return;
-      }
-      if (mintQuote.ethCost > 0n) {
-        const ethStr = formatUnits(mintQuote.ethCost, 18);
-        const trimmed = parseFloat(ethStr).toString();
-        setOutputValue(trimmed);
+      // Show estimated USDX output
+      if (estimatedUsdxOut > 0n) {
+        const usdxStr = formatUnits(estimatedUsdxOut, 18);
+        const trimmed = parseFloat(usdxStr).toString();
+        setOutputValue("~" + trimmed);
       }
     } else {
-      if (inputAmount === 0n) {
-        setOutputValue("");
-        return;
-      }
+      // Show exact ETH output
       if (redeemQuote.ethOut > 0n) {
         const ethStr = formatUnits(redeemQuote.ethOut, 18);
         const trimmed = parseFloat(ethStr).toString();
         setOutputValue(trimmed);
       }
     }
-  }, [isMint, inputAmount, mintQuote.ethCost, redeemQuote.ethOut]);
+  }, [isMint, inputAmount, estimatedUsdxOut, redeemQuote.ethOut]);
 
   // Allowance for redeem (need USDX approved to BondingCurve)
   const { hasAllowance, refetch: refetchAllowance } = useTokenAllowance(
@@ -109,13 +116,13 @@ export function TradeCard() {
   // Slippage calculation
   const minOut = useMemo(() => {
     if (isMint) {
-      // Min tokens out = inputAmount * (1 - slippage)
-      return (inputAmount * (BASIS_POINTS - BigInt(slippageBps))) / BASIS_POINTS;
+      // Min USDX out = estimatedUsdxOut * (1 - slippage)
+      return (estimatedUsdxOut * (BASIS_POINTS - BigInt(slippageBps))) / BASIS_POINTS;
     } else {
       // Min ETH out = ethOut * (1 - slippage)
       return (redeemQuote.ethOut * (BASIS_POINTS - BigInt(slippageBps))) / BASIS_POINTS;
     }
-  }, [isMint, inputAmount, redeemQuote.ethOut, slippageBps]);
+  }, [isMint, estimatedUsdxOut, redeemQuote.ethOut, slippageBps]);
 
   // Execute trade
   const handleExecute = useCallback(() => {
@@ -136,7 +143,7 @@ export function TradeCard() {
         abi: ABIS.bondingCurve,
         functionName: "mint",
         args: [minOut, referrer],
-        value: mintQuote.ethCost,
+        value: inputAmount, // User-entered ETH amount
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
       } as any);
     } else {
@@ -149,7 +156,7 @@ export function TradeCard() {
     }
   }, [
     isMint, needsApproval, contracts, inputAmount, minOut, referrer,
-    mintQuote.ethCost, mintTx, redeemTx, approveTx,
+    mintTx, redeemTx, approveTx,
   ]);
 
   // Button state logic
@@ -160,8 +167,8 @@ export function TradeCard() {
     if (!inputValue || inputAmount === 0n) return { label: "Enter Amount", disabled: true, loading: false };
 
     if (isMint) {
-      // Check ETH balance
-      if (mintQuote.ethCost > ethBalance) {
+      // Check ETH balance against user's ETH input
+      if (inputAmount > ethBalance) {
         return { label: "Insufficient ETH", disabled: true, loading: false };
       }
     } else {
@@ -180,7 +187,7 @@ export function TradeCard() {
     };
   }, [
     activeTx.isPrompting, activeTx.isPending, paused,
-    inputValue, inputAmount, isMint, mintQuote.ethCost,
+    inputValue, inputAmount, isMint,
     ethBalance, usdxBalance, needsApproval,
   ]);
 
@@ -193,7 +200,7 @@ export function TradeCard() {
       return {
         rate: `1 ETH ≈ ${formatNumber(priceNum > 0 ? priceNum : 0, 2)} USDX`,
         fee: undefined, // Mint fees are built into the curve
-        minReceived: `${formatNumber(Number(formatUnits(minOut, 18)), 4)} USDX`,
+        minReceived: `~${formatNumber(Number(formatUnits(minOut, 18)), 2)} USDX`,
         slippage: `${slippageBps / 100}%`,
       };
     }
@@ -241,14 +248,13 @@ export function TradeCard() {
         <SlippageSettings />
       </div>
 
-      {/* Input: What user is providing */}
+      {/* Top input: ETH for mint, USDX for redeem */}
       <TokenInput
-        token={isMint ? "USDX" : "USDX"}
-        label={isMint ? "You receive" : "You pay"}
+        token={isMint ? "ETH" : "USDX"}
+        label="You pay"
         value={inputValue}
         onChange={setInputValue}
-        balance={isMint ? undefined : usdxBalance}
-        showMax={!isMint}
+        balance={isMint ? ethBalance : usdxBalance}
       />
 
       {/* Swap arrow */}
@@ -260,13 +266,12 @@ export function TradeCard() {
         </div>
       </div>
 
-      {/* Output: What user receives */}
+      {/* Bottom output: USDX for mint, ETH for redeem */}
       <TokenInput
-        token={isMint ? "ETH" : "ETH"}
-        label={isMint ? "You pay" : "You receive"}
+        token={isMint ? "USDX" : "ETH"}
+        label="You receive"
         value={outputValue}
-        onChange={() => {}} // Output is read-only for now
-        balance={isMint ? ethBalance : undefined}
+        onChange={() => {}}
         disabled
         showMax={false}
       />
