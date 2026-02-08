@@ -1,7 +1,7 @@
 "use client";
 
 import { useProtocolStats } from "@/hooks/useProtocolStats";
-import { formatCR, formatETH, formatNumber } from "@/lib/format";
+import { formatCR, formatETH, formatNumber, formatUSD } from "@/lib/format";
 import { formatUnits } from "viem";
 import { Skeleton } from "@/components/shared/Skeleton";
 
@@ -25,7 +25,7 @@ export function ProtocolStatsBar() {
   }
 
   const crFormatted = formatCR(cr);
-  const priceNum = Number(formatUnits(currentPrice, 18));
+  const priceNum = Number(formatUnits(currentPrice, 8));
   const volumeRemaining = volumeCap > volumeSinceUpdate ? volumeCap - volumeSinceUpdate : 0n;
 
   const CR_COLORS = {
@@ -43,7 +43,7 @@ export function ProtocolStatsBar() {
       />
       <Stat label="TVL" value={formatETH(ethReserves)} />
       <Stat label="Price" value={`$${formatNumber(priceNum, 2)}`} />
-      <Stat label="Vol. Left" value={formatETH(volumeRemaining)} />
+      <Stat label="Vol. Left" value={formatUSD(volumeRemaining)} />
     </div>
   );
 }

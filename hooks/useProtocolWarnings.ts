@@ -2,7 +2,6 @@
 
 import { useProtocolStats } from "./useProtocolStats";
 import { useUIStore } from "@/stores/ui";
-import { formatUnits } from "viem";
 
 export type WarningLevel = "error" | "warning" | "info";
 
@@ -55,13 +54,13 @@ export function useProtocolWarnings(): ProtocolWarning[] {
     });
   }
 
-  // Critical CR (< 70%)
-  const crPercent = Number(formatUnits(cr, 16));
+  // Critical CR (< 70%) — cr is raw percentage (PERCENTAGE_BASE = 100)
+  const crPercent = Number(cr);
   if (cr > 0n && crPercent < 70) {
     warnings.push({
       key: "critical-cr",
       level: "error",
-      message: `CR critically low (${crPercent.toFixed(1)}%). Redemptions disabled.`,
+      message: `CR critically low (${crPercent}%). Redemptions disabled.`,
       dismissable: false,
     });
   } else if (cr > 0n && crPercent < 120) {
@@ -69,7 +68,7 @@ export function useProtocolWarnings(): ProtocolWarning[] {
     warnings.push({
       key: "low-cr",
       level: "warning",
-      message: `Liquidation fees active. CR below 120% (${crPercent.toFixed(1)}%).`,
+      message: `Liquidation fees active. CR below 120% (${crPercent}%).`,
       dismissable: true,
     });
   }

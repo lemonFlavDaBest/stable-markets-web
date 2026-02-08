@@ -59,11 +59,11 @@ export function TradeCard() {
   );
 
   // For mint: estimate USDX output from ETH input using currentPrice
-  // We can't call calculateMintCost in reverse, so we approximate:
-  // usdxOut ≈ ethIn * currentPrice
+  // currentPrice is 8 decimals (Chainlink), inputAmount is 18 decimals (ETH)
+  // usdxOut (18 dec) ≈ ethIn (18 dec) * price (8 dec) / 1e8
   const estimatedUsdxOut = useMemo(() => {
     if (!isMint || inputAmount === 0n || currentPrice === 0n) return 0n;
-    return (inputAmount * currentPrice) / (10n ** 18n);
+    return (inputAmount * currentPrice) / (10n ** 8n);
   }, [isMint, inputAmount, currentPrice]);
 
   // Mint quote — use estimated USDX to get exact ETH cost for slippage calc
@@ -196,7 +196,7 @@ export function TradeCard() {
     if (inputAmount === 0n) return { rate: "" };
 
     if (isMint) {
-      const priceNum = Number(formatUnits(currentPrice, 18));
+      const priceNum = Number(formatUnits(currentPrice, 8));
       return {
         rate: `1 ETH ≈ ${formatNumber(priceNum > 0 ? priceNum : 0, 2)} USDX`,
         fee: undefined, // Mint fees are built into the curve
@@ -207,7 +207,7 @@ export function TradeCard() {
 
     return {
       rate: currentPrice > 0n
-        ? `1 USDX ≈ ${formatNumber(1 / Number(formatUnits(currentPrice, 18)), 6)} ETH`
+        ? `1 USDX ≈ ${formatNumber(1 / Number(formatUnits(currentPrice, 8)), 6)} ETH`
         : "",
       fee: redeemQuote.fee > 0n
         ? formatETH(redeemQuote.fee)

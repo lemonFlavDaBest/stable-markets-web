@@ -1,7 +1,7 @@
 "use client";
 
 import { useProtocolStats } from "@/hooks/useProtocolStats";
-import { formatCR, formatETH, formatUSDX, formatNumber, formatPercent } from "@/lib/format";
+import { formatCR, formatETH, formatUSD, formatUSDX, formatNumber, formatPercent } from "@/lib/format";
 import { formatUnits } from "viem";
 import { StatCard } from "./StatCard";
 
@@ -28,7 +28,7 @@ export function StatsGrid() {
       ? Number((totalStaked * 10000n) / totalSupply) / 100
       : 0;
 
-  const priceNum = Number(formatUnits(currentPrice, 18));
+  const priceNum = Number(formatUnits(currentPrice, 8));
   const volumeRemaining = volumeCap > volumeSinceUpdate ? volumeCap - volumeSinceUpdate : 0n;
 
   return (
@@ -62,7 +62,7 @@ export function StatsGrid() {
       />
       <StatCard
         label="Volume Remaining"
-        value={formatETH(volumeRemaining)}
+        value={formatUSD(volumeRemaining)}
         isLoading={isLoading}
       />
     </div>

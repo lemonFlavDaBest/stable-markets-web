@@ -37,14 +37,16 @@ export function MarketParams() {
   const warmupMultiplier = (results[2]?.result as bigint) ?? 0n;
 
   // Format values
-  const volatilityPct = Number(formatUnits(volatility, 16));
+  // volatility: 1e18 precision where 1e18 = 1.0x baseline
+  const volatilityNum = Number(formatUnits(volatility, 18));
   const netFlowEth = Number(formatUnits(netFlow, 18));
-  const warmupPct = Number(formatUnits(warmupMultiplier, 16));
+  // warmupMultiplier: raw percentage (PERCENTAGE_BASE = 100), so 20 = 20%
+  const warmupPct = Number(warmupMultiplier);
 
   const params = [
     {
       label: "Volatility (7d)",
-      value: formatPercent(volatilityPct),
+      value: `${formatNumber(volatilityNum, 4)}x`,
     },
     {
       label: "Net Flow",
