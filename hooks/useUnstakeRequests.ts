@@ -3,7 +3,7 @@
 import { useAccount, useReadContract } from "wagmi";
 import { type Address } from "viem";
 import { stakingRewardsContract } from "@/lib/contracts";
-import { REFETCH_INTERVAL } from "@/lib/constants";
+import { DEFAULT_CHAIN_ID, REFETCH_INTERVAL } from "@/lib/constants";
 
 export interface UnstakeRequest {
   /** Amount of USDX being unstaked (18 decimals) */
@@ -24,7 +24,7 @@ export interface UnstakeRequest {
  */
 export function useUnstakeRequests() {
   const { address, chainId } = useAccount();
-  const cid = chainId ?? 1;
+  const cid = chainId ?? DEFAULT_CHAIN_ID;
   const srConfig = stakingRewardsContract(cid);
 
   const { data, isLoading, error, refetch } = useReadContract({

@@ -4,7 +4,7 @@ import { useState } from "react";
 import { useAccount } from "wagmi";
 import { getContracts } from "@/lib/contracts";
 import { formatAddress } from "@/lib/format";
-import { etherscanAddressUrl } from "@/lib/constants";
+import { DEFAULT_CHAIN_ID, etherscanAddressUrl } from "@/lib/constants";
 
 const CONTRACT_LABELS = [
   { key: "stableCoin", label: "StableCoin (USDX)" },
@@ -18,7 +18,7 @@ const CONTRACT_LABELS = [
  */
 export function ContractAddresses() {
   const { chainId } = useAccount();
-  const cid = chainId ?? 1;
+  const cid = chainId ?? DEFAULT_CHAIN_ID;
   const contracts = getContracts(cid);
   const [copiedKey, setCopiedKey] = useState<string | null>(null);
 

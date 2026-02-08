@@ -11,13 +11,14 @@ import { useStakingPosition } from "@/hooks/useStakingPosition";
 import { useContractWrite } from "@/hooks/useContractWrite";
 import { getContracts, ABIS } from "@/lib/contracts";
 import { parseTokenInput } from "@/lib/format";
+import { DEFAULT_CHAIN_ID } from "@/lib/constants";
 
 /**
  * Stake/Unstake card with tabs, token input, and approval flow.
  */
 export function StakeCard() {
   const { chainId } = useAccount();
-  const cid = chainId ?? 1;
+  const cid = chainId ?? DEFAULT_CHAIN_ID;
   const contracts = getContracts(cid);
 
   const { stakeTab, setStakeTab } = useUIStore();

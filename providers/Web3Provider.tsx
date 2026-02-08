@@ -2,7 +2,7 @@
 
 import { type ReactNode } from "react";
 import { WagmiProvider, createConfig, http } from "wagmi";
-import { mainnet, sepolia, hardhat } from "wagmi/chains";
+import { sepolia } from "wagmi/chains";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import {
   RainbowKitProvider,
@@ -15,14 +15,12 @@ import "@rainbow-me/rainbowkit/styles.css";
 // wagmi config
 // ------------------------------------------------------------------
 
-const rpcUrl = process.env.NEXT_PUBLIC_RPC_URL ?? "http://127.0.0.1:8545";
+const rpcUrl = process.env.NEXT_PUBLIC_RPC_URL ?? "https://rpc.sepolia.org";
 
 export const wagmiConfig = createConfig({
-  chains: [mainnet, sepolia, hardhat],
+  chains: [sepolia],
   transports: {
-    [mainnet.id]: http(rpcUrl),
     [sepolia.id]: http(rpcUrl),
-    [hardhat.id]: http(rpcUrl),
   },
   ssr: true,
 });

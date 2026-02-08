@@ -5,7 +5,7 @@ export function Footer() {
         <span>Stable Markets Protocol v0.1</span>
         <div className="flex gap-4">
           <a
-            href="https://github.com/stable-markets"
+            href="https://github.com/lemonFlavDaBest/stable_markets"
             target="_blank"
             rel="noopener noreferrer"
             className="transition-colors hover:text-text-secondary"
@@ -13,7 +13,9 @@ export function Footer() {
             GitHub
           </a>
           <a
-            href="#"
+            href="https://github.com/lemonFlavDaBest/stable_markets/tree/main/user-docs"
+            target="_blank"
+            rel="noopener noreferrer"
             className="transition-colors hover:text-text-secondary"
           >
             Docs

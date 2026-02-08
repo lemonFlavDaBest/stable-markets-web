@@ -5,6 +5,7 @@ import { useStakingPosition } from "@/hooks/useStakingPosition";
 import { useContractWrite } from "@/hooks/useContractWrite";
 import { getContracts, ABIS } from "@/lib/contracts";
 import { formatUSDX, formatETH } from "@/lib/format";
+import { DEFAULT_CHAIN_ID } from "@/lib/constants";
 import { TxButton } from "@/components/shared/TxButton";
 import { Skeleton } from "@/components/shared/Skeleton";
 
@@ -13,7 +14,7 @@ import { Skeleton } from "@/components/shared/Skeleton";
  */
 export function PositionCard() {
   const { isConnected, chainId } = useAccount();
-  const cid = chainId ?? 1;
+  const cid = chainId ?? DEFAULT_CHAIN_ID;
   const contracts = getContracts(cid);
   const { stakedBalance, pendingRewards, isLoading } = useStakingPosition();
 

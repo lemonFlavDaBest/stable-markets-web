@@ -1,8 +1,11 @@
 "use client";
 
 import { useState, useRef, useEffect } from "react";
+import { useAccount } from "wagmi";
 import { useUIStore } from "@/stores/ui";
-import { SLIPPAGE_OPTIONS, MAX_SLIPPAGE_BPS } from "@/lib/constants";
+import { useContractWrite } from "@/hooks/useContractWrite";
+import { SLIPPAGE_OPTIONS, MAX_SLIPPAGE_BPS, DEFAULT_CHAIN_ID } from "@/lib/constants";
+import { getContracts, ABIS } from "@/lib/contracts";
 
 /**
  * Gear icon that opens a popover for slippage tolerance selection.
@@ -12,6 +15,9 @@ export function SlippageSettings() {
   const [isOpen, setIsOpen] = useState(false);
   const [customValue, setCustomValue] = useState("");
   const { slippageBps, setSlippageBps } = useUIStore();
+  const { chainId } = useAccount();
+  const contracts = getContracts(chainId ?? DEFAULT_CHAIN_ID);
+  const updatePriceTx = useContractWrite({ actionName: "Update Price" });
   const ref = useRef<HTMLDivElement>(null);
 
   // Close on outside click
@@ -94,6 +100,27 @@ export function SlippageSettings() {
               High slippage may result in unfavorable execution.
             </p>
           )}
+
+          {/* Update oracle price */}
+          <div className="mt-3 border-t border-border pt-3">
+            <button
+              type="button"
+              disabled={updatePriceTx.isPrompting || updatePriceTx.isPending}
+              onClick={() => {
+                updatePriceTx.execute({
+                  address: contracts.bondingCurve,
+                  abi: ABIS.bondingCurve,
+                  functionName: "updatePrice",
+                  args: [],
+                });
+              }}
+              className="w-full rounded-lg bg-background py-2 text-sm font-medium text-text-secondary transition-colors hover:text-text-primary disabled:opacity-50"
+            >
+              {updatePriceTx.isPrompting || updatePriceTx.isPending
+                ? "Updating..."
+                : "Update Price"}
+            </button>
+          </div>
         </div>
       )}
     </div>

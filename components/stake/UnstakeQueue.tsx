@@ -7,6 +7,7 @@ import { getContracts, ABIS } from "@/lib/contracts";
 import { formatUSDX } from "@/lib/format";
 import { Countdown } from "@/components/shared/Countdown";
 import { Skeleton } from "@/components/shared/Skeleton";
+import { DEFAULT_CHAIN_ID } from "@/lib/constants";
 
 /**
  * Shows the user's pending unstake requests with countdown timers
@@ -14,7 +15,7 @@ import { Skeleton } from "@/components/shared/Skeleton";
  */
 export function UnstakeQueue() {
   const { isConnected, chainId } = useAccount();
-  const cid = chainId ?? 1;
+  const cid = chainId ?? DEFAULT_CHAIN_ID;
   const contracts = getContracts(cid);
   const { requests, isLoading, refetch } = useUnstakeRequests();
 

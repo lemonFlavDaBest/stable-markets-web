@@ -2,7 +2,7 @@
 
 import { useAccount, useReadContract } from "wagmi";
 import { bondingCurveContract } from "@/lib/contracts";
-import { REFETCH_INTERVAL } from "@/lib/constants";
+import { DEFAULT_CHAIN_ID, REFETCH_INTERVAL } from "@/lib/constants";
 
 /**
  * Get the ETH cost to mint a given amount of USDX tokens.
@@ -13,7 +13,7 @@ import { REFETCH_INTERVAL } from "@/lib/constants";
  */
 export function useMintQuote(tokensOut: bigint) {
   const { chainId } = useAccount();
-  const cid = chainId ?? 1;
+  const cid = chainId ?? DEFAULT_CHAIN_ID;
   const bcConfig = bondingCurveContract(cid);
 
   const { data, isLoading, error, refetch } = useReadContract({

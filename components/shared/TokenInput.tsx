@@ -67,8 +67,10 @@ export function TokenInput({
     onChange(trimmed);
   }, [balance, onChange]);
 
+  // ETH shows 3 decimals (e.g. 0.001), USDX shows 2 (stablecoin)
+  const balanceDecimals = token === "ETH" ? 3 : 2;
   const formattedBalance = balance !== undefined
-    ? formatNumber(Number(formatUnits(balance, 18)), 4)
+    ? formatNumber(Number(formatUnits(balance, 18)), balanceDecimals)
     : undefined;
 
   return (

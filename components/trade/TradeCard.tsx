@@ -17,7 +17,7 @@ import { useProtocolStats } from "@/hooks/useProtocolStats";
 import { useContractWrite } from "@/hooks/useContractWrite";
 import { getContracts, ABIS } from "@/lib/contracts";
 import { parseTokenInput, formatNumber, formatETH } from "@/lib/format";
-import { BASIS_POINTS } from "@/lib/constants";
+import { BASIS_POINTS, DEFAULT_CHAIN_ID } from "@/lib/constants";
 
 /**
  * Main trade card with Mint/Redeem tabs.
@@ -25,7 +25,7 @@ import { BASIS_POINTS } from "@/lib/constants";
  */
 export function TradeCard() {
   const { chainId } = useAccount();
-  const cid = chainId ?? 1;
+  const cid = chainId ?? DEFAULT_CHAIN_ID;
   const contracts = getContracts(cid);
   const searchParams = useSearchParams();
 

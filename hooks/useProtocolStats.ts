@@ -6,7 +6,7 @@ import {
   stableCoinContract,
   stakingRewardsContract,
 } from "@/lib/contracts";
-import { REFETCH_INTERVAL } from "@/lib/constants";
+import { DEFAULT_CHAIN_ID, REFETCH_INTERVAL } from "@/lib/constants";
 
 /**
  * Aggregates key protocol statistics from multiple contracts:
@@ -15,7 +15,7 @@ import { REFETCH_INTERVAL } from "@/lib/constants";
  */
 export function useProtocolStats() {
   const { chainId } = useAccount();
-  const cid = chainId ?? 1;
+  const cid = chainId ?? DEFAULT_CHAIN_ID;
 
   const bcConfig = bondingCurveContract(cid);
   const scConfig = stableCoinContract(cid);
