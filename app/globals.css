@@ -27,23 +27,29 @@
   --color-border-accent: #2d1515;
   --color-border-hover: #2a2a2a;
 
-  /* Fonts */
-  --font-sans: var(--font-share-tech-mono);
-  --font-mono: var(--font-jetbrains-mono);
-  --font-heading: var(--font-orbitron);
+  /* Fonts — Tailwind utility tokens */
+  --font-sans: var(--font-share-tech-mono), ui-monospace, monospace;
+  --font-mono: var(--font-jetbrains-mono), ui-monospace, monospace;
+  --font-heading: var(--font-orbitron), sans-serif;
 }
 
 body {
   background: var(--color-background);
   color: var(--color-text-primary);
-  font-family: var(--font-sans), monospace;
+  /* Apply Share Tech Mono directly — the CSS var is set by Next.js font class on <body> */
+  font-family: var(--font-share-tech-mono), ui-monospace, 'Courier New', monospace;
 }
 
 /* Orbitron for all headings — robotic/sci-fi feel */
 h1, h2, h3, h4, h5, h6 {
-  font-family: var(--font-heading), sans-serif;
-  letter-spacing: 0.02em;
+  font-family: var(--font-orbitron), sans-serif;
+  letter-spacing: 0.05em;
   text-transform: uppercase;
+}
+
+/* Ensure buttons, inputs, selects also pick up the body font */
+button, input, select, textarea {
+  font-family: inherit;
 }
 
 /* Scrollbar styling for dark theme */
