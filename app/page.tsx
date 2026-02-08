@@ -8,15 +8,12 @@ export default function LandingPage() {
         {/* Glow effect behind the heading */}
         <div className="absolute -top-20 h-40 w-80 rounded-full bg-primary/10 blur-3xl" />
 
-        <h1 className="relative text-5xl font-bold leading-tight tracking-tight text-text-primary sm:text-6xl md:text-7xl">
+        <h1 className="relative text-5xl font-bold leading-tight text-text-primary sm:text-6xl md:text-7xl">
           Stable Markets
-          <br />
-          <span className="text-primary">Protocol</span>
         </h1>
 
         <p className="relative mt-6 max-w-md text-lg text-text-secondary">
-          Algorithmic stablecoins backed by bonding curves.
-          Mint USDX, stake for ETH rewards, fully on-chain.
+          Permissionless Stable Coin on Ethereum. Backed by ETH.
         </p>
 
         {/* CTA */}
