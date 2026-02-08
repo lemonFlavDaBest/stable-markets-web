@@ -31,7 +31,7 @@ export const metadata: Metadata = {
   description:
     "Mint and redeem USDX stablecoins via bonding curves. Stake to earn ETH rewards.",
   icons: {
-    icon: "/favicon.ico",
+    icon: "/icon.svg",
   },
 };
 
