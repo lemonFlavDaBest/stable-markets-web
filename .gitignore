@@ -45,5 +45,6 @@ next-env.d.ts
 SPEC.md 
 CLAUDE.md
 
-lib/
+# Foundry full artifacts (contain bytecode, not needed in frontend)
+/lib/*.json
 DEPLOYMENT_LOGS.md
