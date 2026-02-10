@@ -39,7 +39,7 @@ export function MarketParams() {
   // Format values
   // volatility: 1e18 precision where 1e18 = 1.0x baseline
   const volatilityNum = Number(formatUnits(volatility, 18));
-  const netFlowEth = Number(formatUnits(netFlow, 18));
+  const netFlowUsdx = Number(formatUnits(netFlow, 18));
   // warmupMultiplier: raw percentage (PERCENTAGE_BASE = 100), so 20 = 20%
   const warmupPct = Number(warmupMultiplier);
 
@@ -50,7 +50,7 @@ export function MarketParams() {
     },
     {
       label: "Net Flow",
-      value: `${netFlowEth >= 0 ? "+" : ""}${formatNumber(netFlowEth, 4)} ETH`,
+      value: `${netFlowUsdx >= 0 ? "+" : ""}${formatNumber(netFlowUsdx, 2)} USDX`,
     },
     {
       label: "Warmup Multiplier",
