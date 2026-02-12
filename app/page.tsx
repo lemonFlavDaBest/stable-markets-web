@@ -1,5 +1,47 @@
 import Link from "next/link";
 
+/** Ethereum diamond SVG — white fill with subtle glow */
+function EthDiamond({ className }: { className?: string }) {
+  return (
+    <svg
+      className={className}
+      viewBox="0 0 256 417"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <path d="M127.961 0L125.166 9.5V285.168L127.961 287.958L255.923 212.32L127.961 0Z" fill="rgba(255,255,255,0.9)" />
+      <path d="M127.962 0L0 212.32L127.962 287.958V154.158V0Z" fill="rgba(255,255,255,0.7)" />
+      <path d="M127.961 312.187L126.386 314.106V412.306L127.961 416.905L255.999 236.587L127.961 312.187Z" fill="rgba(255,255,255,0.9)" />
+      <path d="M127.962 416.905V312.187L0 236.587L127.962 416.905Z" fill="rgba(255,255,255,0.7)" />
+      <path d="M127.961 287.958L255.923 212.32L127.961 154.158V287.958Z" fill="rgba(255,255,255,1)" />
+      <path d="M0 212.32L127.962 287.958V154.158L0 212.32Z" fill="rgba(255,255,255,0.8)" />
+    </svg>
+  );
+}
+
+/**
+ * Custom "E" — 3 horizontal strokes only (Ethereum-style).
+ * Rendered as an inline SVG that matches the surrounding text size.
+ */
+function EthE({ className }: { className?: string }) {
+  return (
+    <svg
+      className={className}
+      viewBox="0 0 60 80"
+      fill="currentColor"
+      xmlns="http://www.w3.org/2000/svg"
+      style={{ display: "inline-block", verticalAlign: "baseline", height: "0.75em", marginBottom: "-0.02em" }}
+    >
+      {/* Top stroke */}
+      <rect x="0" y="0" width="60" height="12" rx="2" />
+      {/* Middle stroke */}
+      <rect x="0" y="34" width="48" height="12" rx="2" />
+      {/* Bottom stroke */}
+      <rect x="0" y="68" width="60" height="12" rx="2" />
+    </svg>
+  );
+}
+
 export default function LandingPage() {
   return (
     <div className="flex flex-1 flex-col items-center justify-center px-4 py-20 md:py-32">
@@ -8,9 +50,16 @@ export default function LandingPage() {
         {/* Glow effect behind the heading */}
         <div className="absolute -top-20 h-40 w-80 rounded-full bg-primary/10 blur-3xl" />
 
+        {/* Ethereum diamond logo */}
+        <EthDiamond className="relative mb-8 h-20 w-20 drop-shadow-[0_0_20px_rgba(147,187,255,0.4)] md:h-28 md:w-28" />
+
         <h1 className="relative text-5xl font-bold leading-tight text-text-primary sm:text-6xl md:text-7xl">
-          Stable Markets
+          Bo<EthE />
         </h1>
+
+        <p className="relative mt-4 text-2xl font-semibold tracking-wider text-text-secondary sm:text-3xl" style={{ fontFamily: "var(--font-orbitron), sans-serif" }}>
+          Bank of <EthE /> TH
+        </p>
 
         <p className="relative mt-6 max-w-md text-lg text-text-secondary">
           Permissionless Stable Coin on Ethereum. Backed by ETH.

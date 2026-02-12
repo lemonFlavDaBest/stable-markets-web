@@ -1,11 +1,11 @@
 @import "tailwindcss";
 
 @theme inline {
-  /* Primary / Accent - Red */
-  --color-primary: #dc2626;
-  --color-primary-hover: #ef4444;
-  --color-primary-muted: #991b1b;
-  --color-primary-glow: rgba(220, 38, 38, 0.3);
+  /* Primary / Accent - Blue */
+  --color-primary: #93bbff;
+  --color-primary-hover: #b8d4ff;
+  --color-primary-muted: #4a7fd4;
+  --color-primary-glow: rgba(147, 187, 255, 0.3);
 
   /* Status */
   --color-success: #22c55e;
@@ -13,19 +13,19 @@
   --color-error: #f87171;
 
   /* Text */
-  --color-text-primary: #fafafa;
-  --color-text-secondary: #a1a1aa;
-  --color-text-muted: #71717a;
+  --color-text-primary: #ffffff;
+  --color-text-secondary: #b0c8ee;
+  --color-text-muted: #7a9fd4;
 
   /* Backgrounds */
-  --color-background: #0a0a0a;
-  --color-card: #111111;
-  --color-card-hover: #181818;
+  --color-background: #1a3a7a;
+  --color-card: #15326e;
+  --color-card-hover: #1d4290;
 
   /* Borders */
-  --color-border: #1f1f1f;
-  --color-border-accent: #2d1515;
-  --color-border-hover: #2a2a2a;
+  --color-border: #2a4f9a;
+  --color-border-accent: #5b8ce0;
+  --color-border-hover: #3560b0;
 
   /* Fonts — Tailwind utility tokens */
   --font-sans: var(--font-share-tech-mono), ui-monospace, monospace;
@@ -86,8 +86,8 @@ input[type="number"] {
   position: fixed;
   inset: 0;
   background-image:
-    linear-gradient(rgba(220, 38, 38, 0.08) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(220, 38, 38, 0.08) 1px, transparent 1px);
+    linear-gradient(rgba(255, 255, 255, 0.06) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.06) 1px, transparent 1px);
   background-size: 60px 60px;
   /* Radial fade so grid fades out toward edges */
   mask-image: radial-gradient(ellipse at 50% 0%, black 0%, transparent 70%);

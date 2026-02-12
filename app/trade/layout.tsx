@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Trade | Stable Markets Protocol",
+  title: "Trade | Bank of ETH",
   description: "Mint and redeem USDX stablecoins via bonding curves.",
 };
 
