@@ -27,9 +27,9 @@ const jetbrainsMono = JetBrains_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Stable Markets Protocol",
+  title: "Bank of ETH",
   description:
-    "Mint and redeem USDX stablecoins via bonding curves. Stake to earn ETH rewards.",
+    "Bank of ETH — Mint and redeem USDX stablecoins via bonding curves. Stake to earn ETH rewards.",
   icons: {
     icon: "/icon.svg",
   },

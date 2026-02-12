@@ -18,7 +18,7 @@ export function Header() {
       <div className="mx-auto flex h-16 max-w-6xl items-center justify-between px-4">
         {/* Logo — text only */}
         <Link href="/" className="text-lg font-semibold text-text-primary">
-          Stable Markets
+          BoE
         </Link>
 
         {/* Nav pills — hidden on mobile, shown on md+ */}

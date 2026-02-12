@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Dashboard | Stable Markets Protocol",
+  title: "Dashboard | Bank of ETH",
   description: "Protocol health metrics, collateralization ratio, and market parameters.",
 };
 

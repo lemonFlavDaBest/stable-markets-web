@@ -9,9 +9,9 @@ export function ToastProvider() {
       position="bottom-right"
       toastOptions={{
         style: {
-          background: "#111111",
-          border: "1px solid #1f1f1f",
-          color: "#fafafa",
+          background: "#15326e",
+          border: "1px solid #2a4f9a",
+          color: "#ffffff",
           fontFamily: "var(--font-share-tech-mono), monospace",
         },
       }}

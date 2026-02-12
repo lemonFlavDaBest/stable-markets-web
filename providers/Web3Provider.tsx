@@ -41,23 +41,23 @@ const queryClient = new QueryClient({
 });
 
 // ------------------------------------------------------------------
-// RainbowKit theme — dark with red accents
+// RainbowKit theme — dark with blue accents
 // ------------------------------------------------------------------
 
 const customTheme: Theme = {
   ...darkTheme({
-    accentColor: "#dc2626",
-    accentColorForeground: "#fafafa",
+    accentColor: "#93bbff",
+    accentColorForeground: "#ffffff",
     borderRadius: "medium",
   }),
   colors: {
     ...darkTheme().colors,
-    modalBackground: "#111111",
-    modalBorder: "#1f1f1f",
-    profileForeground: "#111111",
-    connectButtonBackground: "#111111",
-    connectButtonInnerBackground: "#0a0a0a",
-    connectButtonText: "#fafafa",
+    modalBackground: "#15326e",
+    modalBorder: "#2a4f9a",
+    profileForeground: "#15326e",
+    connectButtonBackground: "#15326e",
+    connectButtonInnerBackground: "#1a3a7a",
+    connectButtonText: "#ffffff",
   },
   fonts: {
     body: "var(--font-share-tech-mono), monospace",
