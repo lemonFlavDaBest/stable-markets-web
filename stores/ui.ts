@@ -19,6 +19,10 @@ interface UIState {
   referrer: Address;
   setReferrer: (addr: Address) => void;
 
+  // Grid pulse effect
+  pulseKey: number;
+  triggerGridPulse: () => void;
+
   // Dismissed warning keys
   dismissedWarnings: Set<string>;
   dismissWarning: (key: string) => void;
@@ -37,6 +41,9 @@ export const useUIStore = create<UIState>((set) => ({
 
   referrer: ZERO_ADDRESS as Address,
   setReferrer: (addr) => set({ referrer: addr }),
+
+  pulseKey: 0,
+  triggerGridPulse: () => set((state) => ({ pulseKey: state.pulseKey + 1 })),
 
   dismissedWarnings: new Set(),
   dismissWarning: (key) =>

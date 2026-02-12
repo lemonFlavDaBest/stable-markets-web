@@ -5,6 +5,7 @@ import { ToastProvider } from "@/providers/ToastProvider";
 import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
 import { MobileNav } from "@/components/layout/MobileNav";
+import { GridPulse } from "@/components/shared/GridPulse";
 import "./globals.css";
 
 const shareTechMono = Share_Tech_Mono({
@@ -47,6 +48,7 @@ export default function RootLayout({
       >
         <Web3Provider>
           <div className="tron-grid flex min-h-screen flex-col relative">
+            <GridPulse />
             <Header />
             <main className="relative z-10 flex-1 pb-20 md:pb-0">{children}</main>
             <Footer />

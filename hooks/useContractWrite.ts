@@ -11,6 +11,7 @@ import { type Hash } from "viem";
 import { toast } from "sonner";
 import { parseContractError } from "@/lib/errors";
 import { etherscanTxUrl } from "@/lib/constants";
+import { useUIStore } from "@/stores/ui";
 
 export type TxStatus = "idle" | "prompting" | "pending" | "success" | "error";
 
@@ -37,6 +38,7 @@ export function useContractWrite({ actionName, onSuccess }: UseContractWriteOpti
   const [txHash, setTxHash] = useState<Hash | undefined>();
 
   const { writeContractAsync } = useWriteContract();
+  const triggerGridPulse = useUIStore((s) => s.triggerGridPulse);
 
   // Wait for receipt when we have a hash
   const { isLoading: isConfirming } = useWaitForTransactionReceipt({
@@ -77,6 +79,7 @@ export function useContractWrite({ actionName, onSuccess }: UseContractWriteOpti
         await waitForTransactionReceipt(wagmiConfig, { hash });
 
         setStatus("success");
+        triggerGridPulse();
         toast.success(`${actionName} confirmed!`);
 
         // Invalidate all queries to refresh balances/stats
@@ -95,7 +98,7 @@ export function useContractWrite({ actionName, onSuccess }: UseContractWriteOpti
         }
       }
     },
-    [writeContractAsync, actionName, chainId, queryClient, onSuccess]
+    [writeContractAsync, actionName, chainId, queryClient, onSuccess, triggerGridPulse]
   );
 
   const reset = useCallback(() => {
