@@ -22,7 +22,7 @@ function EthDiamond({ className }: { className?: string }) {
 
 export default function LandingPage() {
   return (
-    <div className="flex flex-1 flex-col items-center justify-center px-4 py-20 md:py-32">
+    <div className="mx-auto flex max-w-6xl flex-1 flex-col items-center justify-center px-4 py-20 md:py-32">
       {/* Hero */}
       <div className="relative flex flex-col items-center text-center">
         {/* Glow effect behind the heading */}
