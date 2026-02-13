@@ -19,28 +19,6 @@ function EthDiamond({ className }: { className?: string }) {
   );
 }
 
-/**
- * Custom "E" — 3 horizontal strokes only (Ethereum-style).
- * Rendered as an inline SVG that matches the surrounding text size.
- */
-function EthE({ className }: { className?: string }) {
-  return (
-    <svg
-      className={className}
-      viewBox="0 0 60 80"
-      fill="currentColor"
-      xmlns="http://www.w3.org/2000/svg"
-      style={{ display: "inline-block", verticalAlign: "baseline", height: "0.75em", marginBottom: "-0.02em" }}
-    >
-      {/* Top stroke */}
-      <rect x="0" y="0" width="60" height="12" rx="2" />
-      {/* Middle stroke */}
-      <rect x="0" y="34" width="48" height="12" rx="2" />
-      {/* Bottom stroke */}
-      <rect x="0" y="68" width="60" height="12" rx="2" />
-    </svg>
-  );
-}
 
 export default function LandingPage() {
   return (
@@ -54,11 +32,11 @@ export default function LandingPage() {
         <EthDiamond className="relative mb-8 h-20 w-20 drop-shadow-[0_0_20px_rgba(147,187,255,0.4)] md:h-28 md:w-28" />
 
         <h1 className="relative text-5xl font-bold leading-tight text-text-primary sm:text-6xl md:text-7xl">
-          Bo<EthE />
+          BoE
         </h1>
 
         <p className="relative mt-4 text-2xl font-semibold tracking-wider text-text-secondary sm:text-3xl" style={{ fontFamily: "var(--font-orbitron), sans-serif" }}>
-          Bank of <EthE /> TH
+          Bank of ETH
         </p>
 
         <p className="relative mt-6 max-w-md text-lg text-text-secondary">
